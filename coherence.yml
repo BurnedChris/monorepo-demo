@@ -1,0 +1,145 @@
+# Payment Stack
+payments:
+  type: backend
+  url_path: '/payments'
+  dev: ['yarn', 'dev']
+  prod:
+    dockerfile: payments.dockerfile
+    command: ['cd', 'services/payments', '&&', 'yarn', 'serve']
+  system:
+    memory: 2G
+    cpu: 1
+    health_check: '/health'
+  # scheduled_tasks:
+  #   - name: 'snaplet-payments-snapshot'
+  #     command:
+  #       [
+  #         'doppler',
+  #         'run',
+  #         '--preserve-env',
+  #         '--token=$${DOPPLER_PAYMENTS_TOKEN}',
+  #         '--',
+  #         'zx',
+  #         './scripts/snaplet/cron.mjs',
+  #       ]
+  #     schedule: '30 4 * * *'
+  # migration:
+  #   [
+  #     'doppler',
+  #     'run',
+  #     '--preserve-env',
+  #     '--token=$${DOPPLER_PAYMENTS_TOKEN}',
+  #     '--',
+  #     'zx',
+  #     './scripts/snaplet/snapshot.mjs',
+  #   ]
+  resources:
+    - name: payment-db
+      engine: postgres
+      version: 15
+      type: database
+# webhook stack
+webhooks:
+  type: backend
+  url_path: '/webhooks'
+  dev: ['yarn', 'dev']
+  prod:
+    dockerfile: webhooks.dockerfile
+    command: ['cd', 'services/webhooks', '&&', 'yarn', 'serve']
+  system:
+    memory: 2G
+    cpu: 1
+    health_check: '/health'
+  resources:
+    - name: payment-db
+      engine: postgres
+      version: 13
+      type: database
+      use_sibling:
+        resource_name: payment-db
+        service_name: payments
+# organizations stack
+organizations:
+  type: backend
+  url_path: '/organizations'
+  dev: ['yarn', 'dev']
+  prod:
+    dockerfile: organizations.dockerfile
+    command: ['cd', 'services/organizations', '&&', 'yarn', 'serve']
+  system:
+    health_check: '/health'
+
+# uppy for uploading documents and Images
+uppy:
+  type: backend
+  url_path: '/uppy'
+  dev: ['cd', 'services/uppy', '&&', 'yarn', 'serve']
+  prod:
+    dockerfile: uppy.dockerfile
+    command: ['cd', 'services/uppy', '&&', 'yarn', 'serve']
+  system:
+    health_check: '/uppy'
+
+# Redwood Dashboard API
+# dashboard:
+#   type: backend
+#   local_packages: ['node_modules']
+#   prod:
+#     dockerfile: dashboard.dockerfile
+#     command: ['cd', 'services/dashboard', '&&', 'yarn', 'serve']
+#   dev:
+#     command: ['cd', 'services/dashboard', '&&', 'yarn', 'coherence:api:dev']
+#   # migration:
+#   #   [
+#   #     'cd',
+#   #     'services/dashboard',
+#   #     '&&',
+#   #     'yarn',
+#   #     'rw',
+#   #     'prisma',
+#   #     'migrate',
+#   #     'deploy',
+#   #     '&&',
+#   #     'yarn',
+#   #     'rw',
+#   #     'data-migrate',
+#   #     'up',
+#   #   ]
+#   # scheduled_tasks:
+#   #   - name: 'snaplet-payments-snapshot'
+#   #     command:
+#   #       [
+#   #         'doppler',
+#   #         'run',
+#   #         '--preserve-env',
+#   #         '--token=$${DOPPLER_DASHBOARD_TOKEN}',
+#   #         '--',
+#   #         'zx',
+#   #         './scripts/snaplet/cron.mjs',
+#   #       ]
+#   #     schedule: '30 4 * * *'
+#   # migration:
+#   #   [
+#   #     'doppler',
+#   #     'run',
+#   #     '--preserve-env',
+#   #     '--token=$${DOPPLER_DASHBOARD_TOKEN}',
+#   #     '--',
+#   #     'zx',
+#   #     './scripts/snaplet/snapshot.mjs',
+#   #   ]
+#   system:
+#     health_check: '/graphql/health'
+#   resources:
+#     - name: dashboard-db
+#       engine: postgres
+#       version: 15
+#       type: database
+#     - name: file_exports
+#       type: object_storage
+
+build_settings:
+  platform_settings:
+    machine_type: 'N1_HIGHCPU_8'
+
+preview_inactivity_timeout_hours: 72

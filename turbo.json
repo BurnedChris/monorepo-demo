@@ -1,0 +1,45 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build:pkgs": {
+      "outputs": ["dist/**"]
+    },
+    "build:types": {
+      "outputs": ["dist/**"],
+      "dependsOn": ["^build:pkgs"]
+    },
+    "build:services": {
+      "outputs": ["dist/**"],
+      "dependsOn": ["^build:pkgs"]
+    },
+    "check-types": {
+      "cache": false,
+      "outputs": []
+    },
+    "lint": {
+      "dependsOn": []
+    },
+    "dev": {
+      "dependsOn": ["^build:pkgs"],
+      "cache": false,
+      "persistent": true
+    },
+    "gen-index": {
+      "outputs": ["src/**"]
+    },
+    "seed": {
+      "persistent": true,
+      "cache": false
+    },
+    "serve": {
+      "persistent": true,
+      "dependsOn": ["build:pkgs", "build:services"]
+    },
+    "@everfund-service/uppy#serve": {
+      "persistent": true
+    },
+    "@everfund-service/turbo#serve": {
+      "persistent": true
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "extends": ["config:base"],
+  "labels": ["dependencies"],
+  "assignees": ["@burnedchris"],
+  "postUpdateOptions": ["yarnDedupeHighest"],
+  "ignoreDeps": ["nanoid", "node-fetch", "p-map"]
+}

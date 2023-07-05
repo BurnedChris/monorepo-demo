@@ -1,0 +1,2 @@
+branch: main
+schema: ./.redwood/schema.graphql # an output of `$ graphql-inspector introspect ...`

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <script
+      src="https://energetic-soulful.everfund.io/script.js"
+      data-site="UFNJLLKC"
+      defer
+    ></script>
+    <script>
+      ;(() => {
+        var root = document.documentElement
+
+        function getInitialColorMode() {
+          const mql = window.matchMedia('(prefers-color-scheme: dark)')
+          const prefersDarkFromMQ = mql.matches
+          const persistedPreference = localStorage.getItem('ef-color-scheme')
+
+          let colorMode = 'light'
+
+          const forceColorScheme = typeof persistedPreference === 'string'
+
+          if (forceColorScheme) {
+            root.classList.add('force-scheme')
+            return persistedPreference
+          } else {
+            root.classList.add('system-scheme')
+            return prefersDarkFromMQ ? 'dark' : 'light'
+          }
+        }
+        const colorMode = getInitialColorMode()
+
+        root.classList.add(colorMode === 'light' ? 'light' : 'dark')
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="redwood-app">
+      <!-- Please keep the line below for prerender support. -->
+      <%= prerenderPlaceholder %>
+    </div>
+  </body>
+</html>

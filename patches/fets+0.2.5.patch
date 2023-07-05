@@ -1,0 +1,28 @@
+diff --git a/node_modules/fets/cjs/createRouter.js b/node_modules/fets/cjs/createRouter.js
+index c43a74f..d73eda8 100644
+--- a/node_modules/fets/cjs/createRouter.js
++++ b/node_modules/fets/cjs/createRouter.js
+@@ -58,6 +58,9 @@ function createRouterBase({ fetchAPI: givenFetchAPI, base: basePath = '/', plugi
+                 const queryProxy = new Proxy({}, {
+                     get(_, prop) {
+                         const allQueries = url.searchParams.getAll(prop.toString());
++                        if (prop !== "then" && allQueries.length === 0) {
++                            return undefined;
++                        }
+                         return allQueries.length === 1 ? allQueries[0] : allQueries;
+                     },
+                     has(_, prop) {
+diff --git a/node_modules/fets/esm/createRouter.js b/node_modules/fets/esm/createRouter.js
+index b7d5002..8a88a06 100644
+--- a/node_modules/fets/esm/createRouter.js
++++ b/node_modules/fets/esm/createRouter.js
+@@ -54,6 +54,9 @@ export function createRouterBase({ fetchAPI: givenFetchAPI, base: basePath = '/'
+                 const queryProxy = new Proxy({}, {
+                     get(_, prop) {
+                         const allQueries = url.searchParams.getAll(prop.toString());
++                        if (prop !== "then" && allQueries.length === 0) {
++                            return undefined;
++                        }
+                         return allQueries.length === 1 ? allQueries[0] : allQueries;
+                     },
+                     has(_, prop) {

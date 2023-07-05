@@ -1,0 +1,13 @@
+.snaplet
+.vscode
+node_modules
+
+
+.eslintignore
+.npmpackagejsonlintrc.json
+.prettierrc.cjs
+.pritterignore
+eslint.config.js
+knip.jsonc
+renovate.json
+README.md

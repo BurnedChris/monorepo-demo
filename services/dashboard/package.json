@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@everfund-service/dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "api",
+      "web",
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "build:services": "doppler run --preserve-env --token=${DOPPLER_DASHBOARD_TOKEN} -- yarn rw build api",
+    "coherence:api:dev": "doppler run --preserve-env --token=${DOPPLER_DEV_TOKEN} -- yarn rw dev api --apiRootPath=/api",
+    "coherence:api:migration": "doppler run --preserve-env --token=${DOPPLER_TOKEN} --command \"yarn rw prisma migrate deploy && yarn rw dm up && ./.snaplet/snapshot.sh\"",
+    "coherence:api:seed": "doppler run --preserve-env -- ./.snaplet/restore.sh",
+    "coherence:api:serve": "doppler run --preserve-env --token=${DOPPLER_TOKEN} -- yarn rw serve api",
+    "coherence:api:snapshot": "doppler run --preserve-env --token=${DOPPLER_TOKEN} -- ./.snaplet/snapshot.sh cron",
+    "coherence:web:build": "doppler run --preserve-env --token=${DOPPLER_TOKEN} -- yarn rw build web",
+    "coherence:web:dev": "doppler run --preserve-env --token=${DOPPLER_DEV_TOKEN} -- yarn rw dev web --fwd='--allowed-hosts all'",
+    "config:format": "yarn prettier --write .",
+    "config:genv": "yarn genversion --es6 ./web/src/utils/version.ts && yarn genversion --es6 ./api/src/lib/version.ts",
+    "dev": "doppler run -- yarn rw dev",
+    "serve": "doppler run --preserve-env --token=${DOPPLER_DASHBOARD_TOKEN} -- yarn rw serve api",
+    "snapshot": "doppler run --preserve-env --token=${DOPPLER_DASHBOARD_TOKEN} -- zx ../../scripts/snaplet/snapshot.mjs"
+  },
+  "dependencies": {
+    "genversion": "3.1.1"
+  },
+  "devDependencies": {
+    "@redwoodjs/core": "4.5.0",
+    "@redwoodjs/eslint-config": "4.5.0",
+    "@snaplet/copycat": "^0.13.4",
+    "@tanstack/eslint-plugin-query": "^4.29.0",
+    "@trivago/prettier-plugin-sort-imports": "4.1.1",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-i18next": "next",
+    "eslint-plugin-lodash": "^7.4.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react-refresh": "^0.3.4",
+    "eslint-plugin-tailwindcss": "^3.10.3",
+    "eslint-plugin-xstate": "^1.1.0",
+    "node-gyp": "^9.3.1",
+    "prettier": "2.8.7",
+    "prettier-plugin-packagejson": "^2.4.3",
+    "prettier-plugin-prisma": "4.12.0",
+    "prettier-plugin-tailwindcss": "0.2.7",
+    "prettier-plugin-toml": "0.3.1",
+    "snaplet": "^0.38.4"
+  },
+  "prisma": {
+    "seed": "doppler run -- zx ../../scripts/snaplet/snapshot.mjs"
+  },
+  "installConfig": {
+    "hoistingLimits": "workspaces"
+  }
+}

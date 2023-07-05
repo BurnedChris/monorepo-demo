@@ -1,0 +1,17 @@
+name: ESLint Check
+on:
+  push:
+    paths:
+      - '**/*.{tsx,ts,js}'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - name: Lint Code
+        with:
+          node-version: 17
+          cache: 'yarn'
+          cache-dependency-path: 'yarn.lock'
+        run: yarn rw lint

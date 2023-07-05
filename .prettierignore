@@ -1,0 +1,16 @@
+# default 
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+
+# build artifiacts
+#defaults
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+
+# build and artifacts
+build
+dist

@@ -1,0 +1,28 @@
+.DS_Store
+**/.turbo/*
+!.turbo/config.json
+
+build
+dist
+insertMissingCustomers.ts
+missingPaymentJSON.ts
+node_modules
+
+
+# yarn
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.yarn/install-state.gz
+
+
+# redwood
+
+.redwood
+.turbo
+
+./.snaplet
