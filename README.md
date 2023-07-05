@@ -1,22 +1,10 @@
-<p align="center">
-  <img alt="Everfund" width="350" src="./logo.svg#gh-light-mode-only"/>
-   <img alt="Everfund" width="350" src="./logo-dark.svg#gh-dark-mode-only"/>
-  <h1 align="center">Monorepo</h1>
-</p>
+problems 
 
-## Apps
+[ ] - dashboard.dockerfile seems to have an issue around hositing and yarn 3 
 
-- Dashboard - [README](https://github.com/everfund/monorepo/tree/main/apps/dashboard)
-- Gateway - [README](https://github.com/everfund/monorepo/tree/main/apps/gateway)
-- GraphQL API - [README](https://github.com/everfund/monorepo/tree/main/apps/graphql)
+[ ] - yarn 3 needs to be avaliable at the end of the container so that we can run a zx script that uses `yarn dlx snaplet` or if the hoisting is correct we should be able to just call snaplet but that depends on the turbo repo prune
 
-## Packages
 
-- UI - [README](https://github.com/everfund/monorepo/tree/main/packages/ui) - a stub React component library shared by both `dashboard` and `gateway` applications
-
-## Configs
-
-- ESLint Config - [README](https://github.com/everfund/monorepo/tree/main/configs/eslint-config-everfund) - `eslint` configurations (includes `eslint-config-prettier`)
-- Graphql Codegen - [README](https://github.com/everfund/monorepo/tree/main/configs/graphq-codegen) - `graphql-codegen` for typescript types from the Graphql API
-- Tailwind - [README](https://github.com/everfund/monorepo/tree/main/configs/tailwind) - `tailwind.configs`s that are used throughout the monorepo
-- Typescript Configs - [README](https://github.com/everfund/monorepo/tree/main/configs/tsconfig) - `tsconfig.json`s that are used throughout the monorepo
+files in question
+[dashboard.dockerfile](https://github.com/BurnedChris/monorepo-demo/blob/main/dashboard.dockerfile)
+[dashboard/package.json](https://github.com/BurnedChris/monorepo-demo/blob/main/services/dashboard/package.json)
